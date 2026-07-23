@@ -11,7 +11,7 @@ const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
     { '@type': 'WebSite', '@id': 'https://teams.forger.cloud/#website', url: 'https://teams.forger.cloud/', name: 'Forger Teams', inLanguage: ['en', 'es'] },
-    { '@type': 'Organization', '@id': 'https://teams.forger.cloud/#organization', name: 'Forger', url: 'https://forger.cloud/', logo: 'https://teams.forger.cloud/favicon.svg' },
+    { '@type': 'Organization', '@id': 'https://teams.forger.cloud/#organization', name: 'Forger', url: 'https://forger.cloud/', logo: 'https://teams.forger.cloud/forger-logo.svg' },
   ],
 };
 ---
@@ -21,7 +21,7 @@ const structuredData = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="theme-color" content="#151512" />
+    <meta name="theme-color" content="#141528" />
     <meta name="description" content={copy.meta.description} />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonical} />
@@ -38,7 +38,7 @@ const structuredData = {
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Forger Teams operational workspace" />
+    <meta property="og:image:alt" content={copy.meta.imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={copy.meta.title} />
     <meta name="twitter:description" content={copy.meta.description} />

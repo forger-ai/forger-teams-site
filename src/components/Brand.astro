@@ -1,0 +1,12 @@
+---
+import type { Lang } from '../content';
+
+interface Props { lang: Lang; footer?: boolean }
+const { lang, footer = false } = Astro.props;
+const home = lang === 'es' ? '/es/' : '/';
+---
+
+<a class:list={['brand', footer && 'footer-brand']} href={home} aria-label={lang === 'es' ? 'Inicio de Forger Teams' : 'Forger Teams home'} data-brand="forger-teams">
+  <img src="/forger-logo.svg" alt="" width="512" height="512" />
+  <span class="brand-name"><strong>Forger</strong><span>Teams</span></span>
+</a>

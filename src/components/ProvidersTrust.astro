@@ -11,14 +11,14 @@ const trust = content[lang].trust;
   <div class="shell providers-grid">
     <div class="section-heading light"><p class="eyebrow"><span></span>{providers.eyebrow}</p><h2>{providers.title}</h2><p>{providers.body}</p><div class="provider-note"><span aria-hidden="true">i</span>{providers.note}</div></div>
     <div class="provider-stack">
-      {providers.providers.map((provider, index) => <div class="provider-card"><span class:list={['provider-symbol', `symbol-${index}`]}>{provider[0]}</span><strong>{provider}</strong><i aria-hidden="true">CONNECTED</i></div>)}
+      {providers.providers.map((provider, index) => <div class="provider-card"><span class:list={['provider-symbol', `symbol-${index}`]}>{provider[0]}</span><strong>{provider}</strong><i>{providers.status}</i></div>)}
     </div>
   </div>
 </section>
 
 <section id="trust" class="section section-light trust-section" data-section="trust">
   <div class="shell">
-    <div class="section-heading split-heading"><div><p class="eyebrow dark"><span></span>{trust.eyebrow}</p><h2>{trust.title}</h2></div><div class="boundary-diagram" aria-hidden="true"><span>LOCAL</span><i></i><span>TEAM</span><i></i><span>AI</span></div></div>
+    <div class="section-heading split-heading"><div><p class="eyebrow dark"><span></span>{trust.eyebrow}</p><h2>{trust.title}</h2></div><div class="boundary-diagram" aria-hidden="true"><span>{trust.boundaries[0]}</span><i></i><span>{trust.boundaries[1]}</span><i></i><span>{trust.boundaries[2]}</span></div></div>
     <div class="trust-grid">{trust.items.map((item, index) => <article><span>0{index + 1}</span><h3>{item.title}</h3><p>{item.body}</p></article>)}</div>
   </div>
 </section>

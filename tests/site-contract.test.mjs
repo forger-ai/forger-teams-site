@@ -30,6 +30,78 @@ test('English and Spanish routes expose the same product sections', () => {
   assert.match(es(), /lang="es"/);
 });
 
+test('given the Teams site, when the brand is rendered, then it uses the canonical local Forger mark', () => {
+  assert.ok(existsSync(new URL('dist/forger-logo.svg', root)));
+
+  for (const html of [en(), es()]) {
+    assert.match(html, /<img[^>]+src="\/forger-logo\.svg"[^>]+alt=""/i);
+    assert.match(html, /data-brand="forger-teams"/);
+    assert.doesNotMatch(html, /class="brand-mark"/);
+  }
+});
+
+test('given an enterprise evaluator, when they scan either locale, then the product story stays complete and graphical', () => {
+  const expectations = [
+    [en(), [/enterprise desktop app/i, /graphical (?:workspace|tool)/i, /employee/i, /shared company foundation/i, /ChatGPT/i, /Claude/i, /Gemini/i]],
+    [es(), [/aplicación de escritorio.{0,32}empresas/is, /(?:espacio|herramienta) gráfic[oa]/i, /(?:persona|emplead[oa])/i, /base común de la empresa/i, /ChatGPT/i, /Claude/i, /Gemini/i]],
+  ];
+
+  for (const [html, patterns] of expectations) {
+    for (const pattern of patterns) assert.match(html, pattern);
+    assert.match(html, /data-operation-map/);
+    assert.match(html, /data-workflow-stage="input"/);
+    assert.match(html, /data-workflow-stage="agent"/);
+    assert.match(html, /data-workflow-stage="approval"/);
+    assert.match(html, /data-workflow-stage="shared"/);
+  }
+});
+
+test('given the graphical product story, when it is rendered, then meaningful UI stays semantic and motion-safe', () => {
+  for (const html of [en(), es()]) {
+    assert.match(html, /<figure[^>]+data-operation-map/);
+    assert.match(html, /<figcaption[^>]+class="visual-caption"/);
+    assert.match(html, /aria-label="[^"]+"[^>]*data-workflow-stage="approval"/);
+  }
+
+  const css = read('src/styles/global.css');
+  assert.match(css, /@keyframes\s+route-pulse/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+});
+
+test('given coordinated enterprise access, when calls to action render, then they request access instead of implying a public download', () => {
+  assert.match(en(), />Request a Teams demo</);
+  assert.match(es(), />Solicitar demo de Teams</);
+  assert.match(en(), /href="#how-it-works">See how it works</);
+  assert.match(es(), /href="#how-it-works">Ver cómo funciona</);
+  assert.doesNotMatch(en(), />Get Forger Teams</);
+  assert.doesNotMatch(es(), />Obtener Forger Teams</);
+  assert.doesNotMatch(en(), /secure shared company foundation/i);
+  assert.doesNotMatch(es(), /base segura y compartida/i);
+});
+
+test('given an illustrative interface, when controls and boundaries render, then they are localized and not fake-interactive', () => {
+  assert.match(en(), />Supported</);
+  assert.match(es(), />Compatible</);
+  assert.doesNotMatch(`${en()}${es()}`, />CONNECTED</);
+  assert.doesNotMatch(`${en()}${es()}`, /<button[^>]*>[^<]*(?:Approve|Aprobar|Request changes|Solicitar cambios)/i);
+  assert.match(en(), />LOCAL</);
+  assert.match(es(), />LOCAL</);
+  assert.match(es(), />EQUIPO</);
+  assert.match(es(), />IA</);
+  assert.match(es(), /aria-label="Inicio de Forger Teams"/);
+  assert.match(es(), /property="og:image:alt" content="Espacio operacional de Forger Teams"/);
+});
+
+test('given a Spanish evaluator, when release options render, then every visible release detail is localized', () => {
+  const html = es();
+  assert.match(html, /Acceso coordinado/);
+  assert.match(html, /Sin versión disponible/);
+  assert.match(html, /macOS 13 o posterior · Apple silicon/);
+  assert.match(html, /Sin versión compatible/);
+  assert.match(html, /Incorporación/);
+  assert.doesNotMatch(html, /Coordinated access|No current build|No supported build|\bonboarding\b/i);
+});
+
 test('each locale has canonical and complete hreflang metadata', () => {
   const expectations = [
     [en(), 'https://teams.forger.cloud/'],

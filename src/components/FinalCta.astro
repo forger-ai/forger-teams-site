@@ -1,6 +1,7 @@
 ---
 import type { Lang } from '../content';
 import { content } from '../content';
+import Brand from './Brand.astro';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const final = content[lang].final;
@@ -15,6 +16,6 @@ const footer = content[lang].footer;
 </section>
 
 <footer class="site-footer">
-  <div class="shell footer-main"><a class="brand footer-brand" href={lang === 'es' ? '/es/' : '/'}><span class="brand-mark" aria-hidden="true"><i></i></span><span class="brand-word">FORGER</span><span class="brand-teams">TEAMS</span></a><p>{footer.line}</p></div>
+  <div class="shell footer-main"><Brand lang={lang} footer /><p>{footer.line}</p></div>
   <div class="shell footer-bottom"><p>© {new Date().getFullYear()} Forger. {footer.rights}</p><nav aria-label={lang === 'es' ? 'Enlaces secundarios' : 'Secondary links'}><a href="https://forger.cloud/privacy">{footer.privacy}</a><a href="https://forger.cloud">{footer.personal}</a></nav></div>
 </footer>

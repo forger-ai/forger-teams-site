@@ -16,7 +16,7 @@ const copy = content[lang].how;
     </div>
     <div class="review-panel">
       <div class="review-tabs">{copy.states.map((state, index) => <span class={index === 1 ? 'selected' : ''}>{state}</span>)}</div>
-      <div class="review-content"><span class="review-badge">2 / 3</span><div class="review-glyph" aria-hidden="true">✓</div><h3>{copy.preview}</h3><p>{copy.detail}</p><div class="change-lines" aria-hidden="true"><i></i><i></i><i></i></div><div class="review-actions"><button type="button">{copy.revise}</button><button type="button">{copy.approve}</button></div></div>
+      <div class="review-content"><span class="review-badge">2 / 3</span><div class="review-glyph" aria-hidden="true">✓</div><h3>{copy.preview}</h3><p>{copy.detail}</p><div class="change-lines" aria-hidden="true"><i></i><i></i><i></i></div><div class="review-actions" aria-hidden="true"><span>{copy.revise}</span><span>{copy.approve}</span></div></div>
     </div>
   </div>
 </section>

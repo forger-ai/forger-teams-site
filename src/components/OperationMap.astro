@@ -1,0 +1,40 @@
+---
+import type { Lang } from '../content';
+import { content } from '../content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const copy = content[lang].hero;
+---
+
+<figure class="operation-map" data-operation-map aria-labelledby={`operation-map-caption-${lang}`}>
+  <figcaption id={`operation-map-caption-${lang}`} class="visual-caption">{copy.visualLabel}</figcaption>
+  <div class="map-toolbar" aria-hidden="true">
+    <span class="toolbar-dots"><i></i><i></i><i></i></span>
+    <span>{copy.map.workspace}</span>
+    <strong><i></i>{copy.map.status}</strong>
+  </div>
+  <div class="map-canvas">
+    <div class="map-grid" aria-hidden="true"></div>
+    <div class="map-route" aria-hidden="true"><i class="route-dot"></i></div>
+    <ol class="workflow-stages">
+      {copy.map.stages.map((stage, index) => (
+        <li
+          class:list={['workflow-stage', `stage-${stage.key}`, index === 2 && 'is-decision']}
+          aria-label={stage.aria}
+          data-workflow-stage={stage.key}
+        >
+          <span class="stage-index">0{index + 1}</span>
+          <span class="stage-icon" aria-hidden="true">
+            {stage.key === 'input' && <span class="input-lines"><i></i><i></i><i></i></span>}
+            {stage.key === 'agent' && <img src="/forger-logo.svg" alt="" width="512" height="512" />}
+            {stage.key === 'approval' && <span class="approval-check">✓</span>}
+            {stage.key === 'shared' && <span class="shared-nodes"><i></i><i></i><i></i></span>}
+          </span>
+          <span class="stage-copy"><small>{stage.label}</small><strong>{stage.title}</strong><span>{stage.detail}</span></span>
+        </li>
+      ))}
+    </ol>
+    <div class="map-legend" aria-hidden="true"><span><i></i>{copy.map.local}</span><span><i></i>{copy.map.team}</span></div>
+  </div>
+</figure>

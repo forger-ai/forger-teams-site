@@ -8,6 +8,7 @@ const copy = content[lang].download;
 const stateFor = (state: keyof typeof copy.states) => copy.states[state];
 const actionFor = (state: keyof typeof copy.actions) => copy.actions[state];
 const messageFor = (state: keyof typeof copy.messages) => copy.messages[state];
+const localizedReleases = releases.map((release) => ({ ...release, ...release.text[lang] }));
 ---
 
 <section id="download" class="section download-section" data-section="download">
@@ -16,7 +17,7 @@ const messageFor = (state: keyof typeof copy.messages) => copy.messages[state];
     <div class="download-card">
       <p class="picker-label">{copy.manual}</p>
       <div class="platform-options" role="list" aria-label={copy.manual}>
-        {releases.map((release, index) => (
+        {localizedReleases.map((release, index) => (
           <button
             type="button"
             class:list={['platform-option', index === 0 && 'selected']}
@@ -35,10 +36,10 @@ const messageFor = (state: keyof typeof copy.messages) => copy.messages[state];
         ))}
       </div>
       <div class="selected-release" data-selected-release aria-live="polite">
-        <div class="release-state"><span data-release-state>{stateFor(releases[0].state)}</span><i data-detected-label hidden>{copy.detected}</i></div>
-        <div class="release-details"><p><small>{copy.version}</small><strong data-release-version>{releases[0].version}</strong></p><p><small>{copy.requirements}</small><strong data-release-requirements>{releases[0].requirements}</strong></p></div>
-        <p class="release-message" data-release-message>{messageFor(releases[0].state)}</p>
-        <a class="button button-primary button-full" data-release-action href={'actionUrl' in releases[0] ? releases[0].actionUrl : releases[0].downloadUrl}>{actionFor(releases[0].state)} <span aria-hidden="true">→</span></a>
+        <div class="release-state"><span data-release-state>{stateFor(localizedReleases[0].state)}</span><i data-detected-label hidden>{copy.detected}</i></div>
+        <div class="release-details"><p><small>{copy.version}</small><strong data-release-version>{localizedReleases[0].version}</strong></p><p><small>{copy.requirements}</small><strong data-release-requirements>{localizedReleases[0].requirements}</strong></p></div>
+        <p class="release-message" data-release-message>{messageFor(localizedReleases[0].state)}</p>
+        <a class="button button-primary button-full" data-release-action href={'actionUrl' in localizedReleases[0] ? localizedReleases[0].actionUrl : localizedReleases[0].downloadUrl}>{actionFor(localizedReleases[0].state)} <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </div>

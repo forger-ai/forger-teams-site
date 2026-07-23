@@ -1,49 +1,26 @@
 ---
 import type { Lang } from '../content';
 import { content } from '../content';
+import OperationMap from './OperationMap.astro';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const copy = content[lang].hero;
 ---
 
 <section class="hero section" data-section="hero">
-  <div class="hero-orbit orbit-one" aria-hidden="true"></div>
-  <div class="hero-orbit orbit-two" aria-hidden="true"></div>
+  <div class="hero-orbit" aria-hidden="true"></div>
   <div class="shell hero-grid">
     <div class="hero-copy">
       <p class="eyebrow"><span></span>{copy.eyebrow}</p>
       <h1>{copy.title}</h1>
       <p class="hero-lede">{copy.body}</p>
       <div class="hero-actions">
-        <a class="button button-primary" href="#download">{copy.primary}<span aria-hidden="true">→</span></a>
-        <a class="button button-secondary" href="#contact">{copy.secondary}</a>
+        <a class="button button-primary" href="#contact">{copy.primary}<span aria-hidden="true">→</span></a>
+        <a class="button button-secondary" href="#how-it-works">{copy.secondary}</a>
       </div>
       <p class="hero-note">{copy.note}</p>
     </div>
 
-    <figure class="product-frame" aria-labelledby="hero-visual-caption">
-      <figcaption id="hero-visual-caption" class="visual-caption">{copy.visualLabel}</figcaption>
-      <div class="window-bar"><span></span><span></span><span></span><b>OPERATIONS / FINANCE</b></div>
-      <div class="product-body">
-        <aside class="product-sidebar" aria-hidden="true">
-          <span class="sidebar-brand">F</span>
-          <i class="active"></i><i></i><i></i><i></i>
-        </aside>
-        <div class="operation-surface">
-          <div class="surface-heading">
-            <div><span class="surface-kicker">WORKFLOW 07</span><h2>{copy.request}</h2><p>{copy.requestMeta}</p></div>
-            <span class="live-pill"><i></i> AGENT ACTIVE</span>
-          </div>
-          <ol class="work-steps">
-            {copy.steps.map((step, index) => <li class={index < 2 ? 'complete' : 'current'}><span>{index < 2 ? '✓' : index + 1}</span>{step}</li>)}
-          </ol>
-          <div class="approval-card">
-            <div class="approval-icon" aria-hidden="true">!</div>
-            <div><strong>{copy.approval}</strong><p>{copy.approvalDetail}</p></div>
-            <span>{copy.action} <b aria-hidden="true">→</b></span>
-          </div>
-        </div>
-      </div>
-    </figure>
+    <OperationMap lang={lang} />
   </div>
 </section>
