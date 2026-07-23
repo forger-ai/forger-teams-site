@@ -167,8 +167,8 @@ test('release metadata models every state and exposes four verified public downl
   assert.match(config, /type ReleaseState/);
   assert.match(config, /state:\s*'available';\s*downloadUrl:\s*string/);
   assert.doesNotMatch(config, /actionUrl:\s*['"]\//);
-  assert.match(config, /const releaseBaseUrl = 'https:\/\/github\.com\/forger-ai\/forger-desktop-teams\/releases\/download\/forger-desktop-teams\/v0\.5\.12'/);
-  assert.match(config, /const releaseNotesUrl = 'https:\/\/github\.com\/forger-ai\/forger-desktop-teams\/releases\/tag\/forger-desktop-teams\/v0\.5\.12'/);
+  assert.match(config, /const releaseBaseUrl = 'https:\/\/github\.com\/forger-ai\/forger-teams-releases\/releases\/download\/v0\.5\.12'/);
+  assert.match(config, /const releaseNotesUrl = 'https:\/\/github\.com\/forger-ai\/forger-teams-releases\/releases\/tag\/v0\.5\.12'/);
   assert.equal((config.match(/id:\s*'[^']+', state:\s*'available'/g) ?? []).length, 4);
   assert.doesNotMatch(config, /const accessUrl/);
   for (const html of [en(), es()]) {
@@ -177,10 +177,10 @@ test('release metadata models every state and exposes four verified public downl
     assert.match(html, /data-platform-option="macos-x64"/);
     assert.match(html, /data-platform-option="windows-x64"/);
     assert.match(html, /data-platform-option="linux"/);
-    assert.match(html, /releases\/download\/forger-desktop-teams\/v0\.5\.12\/forger-desktop-teams-macos-arm64\.dmg/);
-    assert.match(html, /releases\/download\/forger-desktop-teams\/v0\.5\.12\/forger-desktop-teams-macos-x64\.dmg/);
-    assert.match(html, /releases\/download\/forger-desktop-teams\/v0\.5\.12\/forger-desktop-teams-windows-x64\.exe/);
-    assert.match(html, /releases\/download\/forger-desktop-teams\/v0\.5\.12\/forger-desktop-teams-linux-x64\.deb/);
+    assert.match(html, /forger-teams-releases\/releases\/download\/v0\.5\.12\/forger-desktop-teams-macos-arm64\.dmg/);
+    assert.match(html, /forger-teams-releases\/releases\/download\/v0\.5\.12\/forger-desktop-teams-macos-x64\.dmg/);
+    assert.match(html, /forger-teams-releases\/releases\/download\/v0\.5\.12\/forger-desktop-teams-windows-x64\.exe/);
+    assert.match(html, /forger-teams-releases\/releases\/download\/v0\.5\.12\/forger-desktop-teams-linux-x64\.deb/);
   }
 });
 

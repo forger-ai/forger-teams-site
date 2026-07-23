@@ -16,8 +16,8 @@ export type ReleaseMetadata =
   | (BaseRelease & { state: 'unavailable'; actionUrl: string })
   | (BaseRelease & { state: 'unsupported'; actionUrl?: string });
 
-const releaseBaseUrl = 'https://github.com/forger-ai/forger-desktop-teams/releases/download/forger-desktop-teams/v0.5.12';
-const releaseNotesUrl = 'https://github.com/forger-ai/forger-desktop-teams/releases/tag/forger-desktop-teams/v0.5.12';
+const releaseBaseUrl = 'https://github.com/forger-ai/forger-teams-releases/releases/download/v0.5.12';
+const releaseNotesUrl = 'https://github.com/forger-ai/forger-teams-releases/releases/tag/v0.5.12';
 
 // Static public metadata updated only after the owning release workflow succeeds.
 export const releases: readonly ReleaseMetadata[] = [
