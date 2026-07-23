@@ -9,6 +9,8 @@ const stateFor = (state: keyof typeof copy.states) => copy.states[state];
 const actionFor = (state: keyof typeof copy.actions) => copy.actions[state];
 const messageFor = (state: keyof typeof copy.messages) => copy.messages[state];
 const localizedReleases = releases.map((release) => ({ ...release, ...release.text[lang] }));
+const platformLogo = (id: string) => id.startsWith('macos') ? '/platform-logos/apple.svg' : id.startsWith('windows') ? '/platform-logos/windows.svg' : '/platform-logos/linux.svg';
+const platformAlt = (id: string) => id.startsWith('macos') ? 'Apple' : id.startsWith('windows') ? 'Windows' : 'Linux';
 ---
 
 <section id="download" class="section download-section" data-section="download">
@@ -30,7 +32,7 @@ const localizedReleases = releases.map((release) => ({ ...release, ...release.te
             data-action-url={'downloadUrl' in release ? release.downloadUrl : (release.actionUrl ?? '#download')}
             aria-pressed={index === 0 ? 'true' : 'false'}
           >
-            <span class:list={['platform-icon', release.id.startsWith('macos') && 'apple', release.id.startsWith('windows') && 'windows']}>{release.id === 'linux' ? 'Lx' : release.id.startsWith('windows') ? '⊞' : '●'}</span>
+            <span class="platform-icon"><img src={platformLogo(release.id)} alt={`${platformAlt(release.id)} logo`} width="28" height="28" /></span>
             <span><strong>{release.shortLabel}</strong><small>{stateFor(release.state)}</small></span>
           </button>
         ))}

@@ -1,7 +1,6 @@
 ---
 import type { Lang } from '../content';
 import { content } from '../content';
-import OperationMap from './OperationMap.astro';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const copy = content[lang].hero;
@@ -16,11 +15,20 @@ const copy = content[lang].hero;
       <p class="hero-lede">{copy.body}</p>
       <div class="hero-actions">
         <a class="button button-primary" href="#contact">{copy.primary}<span aria-hidden="true">→</span></a>
-        <a class="button button-secondary" href="#how-it-works">{copy.secondary}</a>
+        <a class="button button-secondary" href="#use-cases">{copy.secondary}</a>
       </div>
       <p class="hero-note">{copy.note}</p>
     </div>
-
-    <OperationMap lang={lang} />
+    <div class="hero-system" aria-label={lang === 'es' ? 'Los tres pilares de Forger Teams' : 'The three pillars of Forger Teams'}>
+      <div class="system-core">
+        <img src="/forger-logo.svg" alt="" width="512" height="512" />
+        <span>Forger</span><strong>Teams</strong>
+      </div>
+      <ol>
+        {copy.pillars.map((pillar) => (
+          <li><span>{pillar.number}</span><div><strong>{pillar.title}</strong><small>{pillar.body}</small></div></li>
+        ))}
+      </ol>
+    </div>
   </div>
 </section>

@@ -9,7 +9,7 @@ const copy = content[lang].contact;
 <section id="contact" class="section section-stone contact-section" data-section="contact">
   <div class="shell contact-grid">
     <div class="section-heading"><p class="eyebrow dark"><span></span>{copy.eyebrow}</p><h2>{copy.title}</h2><p>{copy.body}</p><ul class="contact-points">{copy.points.map((point) => <li><span>✓</span>{point}</li>)}</ul></div>
-    <form class="contact-form" data-contact-form data-locale={lang} data-success={copy.success} data-error={copy.error} data-rate-limited={copy.rateLimited} data-submit={copy.submit} data-sending={copy.sending} novalidate>
+    <form class="contact-form" data-primary-lead-form data-contact-form data-locale={lang} data-success={copy.success} data-error={copy.error} data-rate-limited={copy.rateLimited} data-submit={copy.submit} data-sending={copy.sending} novalidate>
       <div class="form-grid">
         <label><span>{copy.fields.name}</span><input name="name" autocomplete="name" required maxlength="120" placeholder={copy.placeholders.name} /></label>
         <label><span>{copy.fields.email}</span><input name="email" type="email" autocomplete="email" required maxlength="254" placeholder={copy.placeholders.email} /></label>

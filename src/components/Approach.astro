@@ -1,0 +1,26 @@
+---
+import type { Lang } from '../content';
+import { content } from '../content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const copy = content[lang].approach;
+---
+
+<section id="approach" class="section approach-section" data-section="approach">
+  <div class="shell">
+    <div class="section-heading approach-heading">
+      <p class="eyebrow"><span></span>{copy.eyebrow}</p>
+      <h2>{copy.title}</h2>
+      <p>{copy.body}</p>
+    </div>
+    <div class="capability-grid">
+      {copy.capabilities.map((item, index) => (
+        <article><span>0{index + 1}</span><h3>{item.title}</h3><p>{item.body}</p></article>
+      ))}
+    </div>
+    <div class="offer-panel">
+      <div class="offer-intro"><p>{copy.offer.label}</p><h3>{copy.offer.title}</h3><a class="button button-primary" href="#contact">{copy.offer.action}<span aria-hidden="true">→</span></a></div>
+      <ol>{copy.offer.steps.map((step) => <li><span>{step.number}</span><div><strong>{step.title}</strong><p>{step.body}</p></div></li>)}</ol>
+    </div>
+  </div>
+</section>

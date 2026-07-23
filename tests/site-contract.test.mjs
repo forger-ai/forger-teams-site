@@ -18,13 +18,11 @@ test('English and Spanish routes expose the same product sections', () => {
   assert.deepEqual(sectionIds(en()), [
     'hero',
     'examples',
-    'foundation',
-    'how-it-works',
+    'approach',
     'providers',
     'trust',
-    'download',
     'contact',
-    'final-cta',
+    'download',
   ]);
   assert.match(en(), /lang="en"/);
   assert.match(es(), /lang="es"/);
@@ -40,58 +38,81 @@ test('given the Teams site, when the brand is rendered, then it uses the canonic
   }
 });
 
-test('given an enterprise evaluator, when they scan either locale, then the product story stays complete and graphical', () => {
+test('given an enterprise evaluator, when they scan either locale, then the product story is concrete and conversion focused', () => {
   const expectations = [
-    [en(), [/enterprise desktop app/i, /graphical (?:workspace|tool)/i, /employee/i, /shared company foundation/i, /ChatGPT/i, /Claude/i, /Gemini/i]],
-    [es(), [/aplicación de escritorio.{0,32}empresas/is, /(?:espacio|herramienta) gráfic[oa]/i, /(?:persona|emplead[oa])/i, /base común de la empresa/i, /ChatGPT/i, /Claude/i, /Gemini/i]],
+    [en(), [/automate internal operations/i, /centralize/i, /create (?:their own )?agents and workflows/i, /month.{0,12}trial/i, /ChatGPT/i, /Claude/i, /Gemini/i]],
+    [es(), [/automatiza la operación interna/i, /centraliza/i, /crear sus propios agentes y flujos/i, /mes de prueba/i, /ChatGPT/i, /Claude/i, /Gemini/i]],
   ];
 
   for (const [html, patterns] of expectations) {
     for (const pattern of patterns) assert.match(html, pattern);
-    assert.match(html, /data-operation-map/);
-    assert.match(html, /data-workflow-stage="input"/);
-    assert.match(html, /data-workflow-stage="agent"/);
-    assert.match(html, /data-workflow-stage="approval"/);
-    assert.match(html, /data-workflow-stage="shared"/);
+    assert.doesNotMatch(html, /data-operation-map|data-workflow-stage|mini-interface|review-panel/);
   }
 });
 
-test('given the graphical product story, when it is rendered, then meaningful UI stays semantic and motion-safe', () => {
-  for (const html of [en(), es()]) {
-    assert.match(html, /<figure[^>]+data-operation-map/);
-    assert.match(html, /<figcaption[^>]+class="visual-caption"/);
-    assert.match(html, /aria-label="[^"]+"[^>]*data-workflow-stage="approval"/);
-  }
-
+test('given a concise product story, when it is rendered, then it does not invent product screens and motion remains safe', () => {
   const css = read('src/styles/global.css');
-  assert.match(css, /@keyframes\s+route-pulse/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
 });
 
+test('given real operational pain, when use cases render, then both locales explain the before and the operational change', () => {
+  for (const html of [en(), es()]) {
+    assert.match(html, /data-use-case="monthly-close"/);
+    assert.match(html, /data-use-case="onboarding-access"/);
+    assert.match(html, /data-use-case="internal-requests"/);
+  }
+  assert.match(en(), /spreadsheets, email, and chat/i);
+  assert.match(en(), /access requests/i);
+  assert.match(en(), /procurement, finance, and IT/i);
+  assert.match(es(), /planillas, correos y chat/i);
+  assert.match(es(), /solicitudes de acceso/i);
+  assert.match(es(), /compras, finanzas y TI/i);
+});
+
+test('given the onboarding offer, when the evaluator reaches the approach and form, then the free first step and trial are explicit', () => {
+  assert.match(en(), /free discovery session/i);
+  assert.match(en(), /first workflow blueprint/i);
+  assert.match(en(), /one-month trial/i);
+  assert.match(es(), /reunión de diagnóstico.{0,40}sin costo/is);
+  assert.match(es(), /primera bajada del flujo.{0,40}sin costo/is);
+  assert.match(es(), /un mes de prueba/i);
+});
+
+test('given supported providers and platforms, when their choices render, then recognizable local logos are used', () => {
+  for (const file of ['chatgpt.svg', 'claude.svg', 'gemini.svg']) {
+    assert.ok(existsSync(new URL(`dist/provider-logos/${file}`, root)));
+  }
+  for (const file of ['apple.svg', 'windows.svg', 'linux.svg']) {
+    assert.ok(existsSync(new URL(`dist/platform-logos/${file}`, root)));
+  }
+  for (const html of [en(), es()]) {
+    assert.match(html, /src="\/provider-logos\/chatgpt\.svg"/);
+    assert.match(html, /src="\/provider-logos\/claude\.svg"/);
+    assert.match(html, /src="\/provider-logos\/gemini\.svg"/);
+    assert.match(html, /src="\/platform-logos\/apple\.svg"/);
+    assert.match(html, /src="\/platform-logos\/windows\.svg"/);
+    assert.match(html, /src="\/platform-logos\/linux\.svg"/);
+  }
+});
+
 test('given a verified public release, when calls to action render, then downloads and enterprise rollout remain distinct', () => {
-  assert.match(en(), />Request a Teams demo</);
-  assert.match(es(), />Solicitar demo de Teams</);
-  assert.match(en(), /href="#how-it-works">See how it works</);
-  assert.match(es(), /href="#how-it-works">Ver cómo funciona</);
-  assert.match(en(), /href="#download">Download</);
-  assert.match(es(), /href="#download">Descargar</);
-  assert.match(en(), />Download Forger Teams\s*</);
-  assert.match(es(), />Descargar Forger Teams\s*</);
+  assert.match(en(), /href="#contact">Tell us your AI use case/);
+  assert.match(es(), /href="#contact">Cuéntanos tu caso de uso para la IA/);
+  assert.ok(en().indexOf('data-section="contact"') < en().indexOf('data-section="download"'));
+  assert.ok(es().indexOf('data-section="contact"') < es().indexOf('data-section="download"'));
   assert.doesNotMatch(en(), /secure shared company foundation/i);
   assert.doesNotMatch(es(), /base segura y compartida/i);
 });
 
-test('given an illustrative interface, when controls and boundaries render, then they are localized and not fake-interactive', () => {
-  assert.match(en(), />Supported</);
-  assert.match(es(), />Compatible</);
+test('given the trust boundaries, when they render, then they are localized and concise', () => {
   assert.doesNotMatch(`${en()}${es()}`, />CONNECTED</);
   assert.doesNotMatch(`${en()}${es()}`, /<button[^>]*>[^<]*(?:Approve|Aprobar|Request changes|Solicitar cambios)/i);
-  assert.match(en(), />LOCAL</);
-  assert.match(es(), />LOCAL</);
-  assert.match(es(), />EQUIPO</);
+  assert.match(en(), />Local</);
+  assert.match(es(), />Local</);
+  assert.match(es(), />Equipo</);
   assert.match(es(), />IA</);
   assert.match(es(), /aria-label="Inicio de Forger Teams"/);
-  assert.match(es(), /property="og:image:alt" content="Espacio operacional de Forger Teams"/);
+  assert.match(es(), /property="og:image:alt" content="Forger Teams para operaciones internas"/);
 });
 
 test('given a Spanish evaluator, when release options render, then every visible release detail is localized', () => {
@@ -103,7 +124,7 @@ test('given a Spanish evaluator, when release options render, then every visible
   assert.match(html, /Windows 10 o posterior · 64 bits/);
   assert.match(html, /Linux compatible con Debian · 64 bits/);
   assert.match(html, /Incorporación/);
-  assert.doesNotMatch(html, /Acceso coordinado|Sin versión disponible|Sin versión compatible|Coordinated access|No current build|No supported build|\bonboarding\b/i);
+  assert.doesNotMatch(html, /Acceso coordinado|Sin versión disponible|Sin versión compatible|Coordinated access|No current build|No supported build/i);
 });
 
 test('each locale has canonical and complete hreflang metadata', () => {
@@ -155,6 +176,10 @@ test('sales form uses the same-origin proxy and locale contract', () => {
   }
   assert.match(en(), /data-locale="en"/);
   assert.match(es(), /data-locale="es"/);
+  assert.match(en(), /Tell us your AI use case/);
+  assert.match(es(), /Cuéntanos tu caso de uso para la IA/);
+  assert.match(en(), /What would you like to automate or centralize\?/);
+  assert.match(es(), /¿Qué te gustaría automatizar o centralizar\?/);
   assert.match(read('src/lib/contact-request.mjs'), /\/api\/team-demo-requests/);
   assert.match(read('src/lib/team-demo-proxy.mjs'), /https:\/\/platform\.forger\.cloud\/api\/team_demo_requests/);
 });
@@ -188,9 +213,9 @@ test('provider boundaries are explicit in both languages', () => {
   assert.match(en(), /selected provider/i);
   assert.match(en(), /plan requirements/i);
   assert.match(en(), /limits still depend/i);
-  assert.match(en(), /task content may be sent to the provider you select/i);
+  assert.match(en(), /task content may be sent to the selected provider/i);
   assert.match(es(), /plan.{0,180}límites/is);
-  assert.match(es(), /contenido de una tarea puede enviarse al proveedor que elijas/i);
+  assert.match(es(), /contenido de una tarea puede enviarse al proveedor elegido/i);
 });
 
 test('motion stays short and reduced-motion has a complete override', () => {

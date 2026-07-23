@@ -12,14 +12,14 @@ const alternate = lang === 'es' ? '/' : '/es/';
   <div class="shell header-inner">
     <Brand lang={lang} />
     <nav class="header-nav" aria-label={lang === 'es' ? 'Navegación principal' : 'Main navigation'}>
-      <a href="#product">{copy.product}</a>
-      <a href="#how-it-works">{copy.how}</a>
+      <a href="#use-cases">{copy.cases}</a>
+      <a href="#approach">{copy.approach}</a>
       <a href="#trust">{copy.trust}</a>
     </nav>
     <div class="header-actions">
       <a class="language-link" href={alternate} hreflang={lang === 'es' ? 'en' : 'es'}>{copy.language}</a>
-      <a class="text-action" href="#contact">{copy.sales}</a>
-      <a class="button button-small button-primary" href="#download">{copy.download}</a>
+      <a class="text-action" href="#download">{copy.download}</a>
+      <a class="button button-small button-primary" href="#contact">{copy.contact}</a>
     </div>
   </div>
 </header>

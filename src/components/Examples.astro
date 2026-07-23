@@ -6,7 +6,7 @@ const { lang } = Astro.props;
 const copy = content[lang].examples;
 ---
 
-<section id="product" class="section section-light" data-section="examples">
+<section id="use-cases" class="section section-light" data-section="examples">
   <div class="shell">
     <div class="section-heading split-heading">
       <div><p class="eyebrow dark"><span></span>{copy.eyebrow}</p><h2>{copy.title}</h2></div>
@@ -14,13 +14,11 @@ const copy = content[lang].examples;
     </div>
     <div class="examples-grid">
       {copy.items.map((item, index) => (
-        <article class="example-card">
+        <article class="example-card" data-use-case={item.id}>
           <div class="example-top"><span>0{index + 1}</span><strong>{item.tag}</strong></div>
-          <div class="example-stage before"><small>{copy.labels[0]}</small><p>{item.before}</p></div>
-          <div class="stage-arrow" aria-hidden="true">↓</div>
-          <div class="example-stage interface"><small>{copy.labels[1]}</small><p>{item.interface}</p><div class="mini-interface" aria-hidden="true"><i></i><i></i><i></i></div></div>
-          <div class="stage-arrow" aria-hidden="true">↓</div>
-          <div class="example-stage result"><small>{copy.labels[2]}</small><p>{item.result}</p></div>
+          <div class="case-row pain"><small>{copy.labels.pain}</small><p>{item.pain}</p></div>
+          <div class="case-row forger"><small>{copy.labels.forger}</small><p>{item.forger}</p></div>
+          <div class="case-row outcome"><small>{copy.labels.outcome}</small><p>{item.outcome}</p></div>
         </article>
       ))}
     </div>
