@@ -1,0 +1,27 @@
+---
+import type { Lang } from '../content';
+import { content } from '../content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const copy = content[lang].nav;
+const alternate = lang === 'es' ? '/' : '/es/';
+---
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href={lang === 'es' ? '/es/' : '/'} aria-label="Forger Teams home">
+      <span class="brand-mark" aria-hidden="true"><i></i></span>
+      <span class="brand-word">FORGER</span><span class="brand-teams">TEAMS</span>
+    </a>
+    <nav class="header-nav" aria-label={lang === 'es' ? 'Navegación principal' : 'Main navigation'}>
+      <a href="#product">{copy.product}</a>
+      <a href="#how-it-works">{copy.how}</a>
+      <a href="#trust">{copy.trust}</a>
+    </nav>
+    <div class="header-actions">
+      <a class="language-link" href={alternate} hreflang={lang === 'es' ? 'en' : 'es'}>{copy.language}</a>
+      <a class="text-action" href="#contact">{copy.sales}</a>
+      <a class="button button-small button-primary" href="#download">{copy.download}</a>
+    </div>
+  </div>
+</header>

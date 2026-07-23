@@ -1,0 +1,24 @@
+---
+import type { Lang } from '../content';
+import { content } from '../content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const providers = content[lang].providers;
+const trust = content[lang].trust;
+---
+
+<section class="section providers-section" data-section="providers">
+  <div class="shell providers-grid">
+    <div class="section-heading light"><p class="eyebrow"><span></span>{providers.eyebrow}</p><h2>{providers.title}</h2><p>{providers.body}</p><div class="provider-note"><span aria-hidden="true">i</span>{providers.note}</div></div>
+    <div class="provider-stack">
+      {providers.providers.map((provider, index) => <div class="provider-card"><span class:list={['provider-symbol', `symbol-${index}`]}>{provider[0]}</span><strong>{provider}</strong><i aria-hidden="true">CONNECTED</i></div>)}
+    </div>
+  </div>
+</section>
+
+<section id="trust" class="section section-light trust-section" data-section="trust">
+  <div class="shell">
+    <div class="section-heading split-heading"><div><p class="eyebrow dark"><span></span>{trust.eyebrow}</p><h2>{trust.title}</h2></div><div class="boundary-diagram" aria-hidden="true"><span>LOCAL</span><i></i><span>TEAM</span><i></i><span>AI</span></div></div>
+    <div class="trust-grid">{trust.items.map((item, index) => <article><span>0{index + 1}</span><h3>{item.title}</h3><p>{item.body}</p></article>)}</div>
+  </div>
+</section>

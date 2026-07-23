@@ -1,0 +1,20 @@
+---
+import type { Lang } from '../content';
+import { content } from '../content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const final = content[lang].final;
+const footer = content[lang].footer;
+---
+
+<section class="section final-section" data-section="final-cta">
+  <div class="shell final-grid">
+    <article class="final-card product-cta"><p>{final.productLabel}</p><h2>{final.productTitle}</h2><a class="button button-dark" href="#download">{final.productAction} <span aria-hidden="true">→</span></a></article>
+    <article class="final-card sales-cta"><p>{final.salesLabel}</p><h2>{final.salesTitle}</h2><a class="button button-secondary-light" href="#contact">{final.salesAction} <span aria-hidden="true">→</span></a></article>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="shell footer-main"><a class="brand footer-brand" href={lang === 'es' ? '/es/' : '/'}><span class="brand-mark" aria-hidden="true"><i></i></span><span class="brand-word">FORGER</span><span class="brand-teams">TEAMS</span></a><p>{footer.line}</p></div>
+  <div class="shell footer-bottom"><p>© {new Date().getFullYear()} Forger. {footer.rights}</p><nav aria-label={lang === 'es' ? 'Enlaces secundarios' : 'Secondary links'}><a href="https://forger.cloud/privacy">{footer.privacy}</a><a href="https://forger.cloud">{footer.personal}</a></nav></div>
+</footer>

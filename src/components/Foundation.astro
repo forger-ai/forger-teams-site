@@ -1,0 +1,25 @@
+---
+import type { Lang } from '../content';
+import { content } from '../content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const copy = content[lang].foundation;
+---
+
+<section class="section foundation" data-section="foundation">
+  <div class="shell">
+    <div class="section-heading centered light"><p class="eyebrow"><span></span>{copy.eyebrow}</p><h2>{copy.title}</h2><p>{copy.body}</p></div>
+    <div class="foundation-grid">
+      {[copy.employee, copy.company].map((group, index) => (
+        <article class:list={['foundation-card', index === 1 && 'company-card']}>
+          <div class="foundation-visual" aria-hidden="true">
+            <span class="visual-number">0{index + 1}</span>
+            <div class="person-node"><i></i></div>
+            <div class="node-lines"><i></i><i></i><i></i></div>
+          </div>
+          <div class="foundation-copy"><p class="card-label">{group.label}</p><h3>{group.title}</h3><ul>{group.points.map((point) => <li><span>✓</span>{point}</li>)}</ul></div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

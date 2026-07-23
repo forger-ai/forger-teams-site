@@ -1,0 +1,59 @@
+---
+import type { Lang } from '../content';
+import { content } from '../content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const copy = content[lang].contact;
+---
+
+<section id="contact" class="section section-stone contact-section" data-section="contact">
+  <div class="shell contact-grid">
+    <div class="section-heading"><p class="eyebrow dark"><span></span>{copy.eyebrow}</p><h2>{copy.title}</h2><p>{copy.body}</p><ul class="contact-points">{copy.points.map((point) => <li><span>✓</span>{point}</li>)}</ul></div>
+    <form class="contact-form" data-contact-form data-locale={lang} data-success={copy.success} data-error={copy.error} data-rate-limited={copy.rateLimited} data-submit={copy.submit} data-sending={copy.sending} novalidate>
+      <div class="form-grid">
+        <label><span>{copy.fields.name}</span><input name="name" autocomplete="name" required maxlength="120" placeholder={copy.placeholders.name} /></label>
+        <label><span>{copy.fields.email}</span><input name="email" type="email" autocomplete="email" required maxlength="254" placeholder={copy.placeholders.email} /></label>
+        <label class="full"><span>{copy.fields.phone}</span><input name="phone" type="tel" autocomplete="tel" required maxlength="40" placeholder={copy.placeholders.phone} /></label>
+        <label class="full"><span>{copy.fields.company}</span><input name="company" autocomplete="organization" required maxlength="160" placeholder={copy.placeholders.company} /></label>
+        <label class="full"><span>{copy.fields.message}</span><textarea name="message" required minlength="20" maxlength="2000" rows="5" placeholder={copy.placeholders.message}></textarea></label>
+        <label class="honeypot" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+      </div>
+      <p class="form-consent">{copy.consent}</p>
+      <button class="button button-primary button-full" type="submit"><span data-submit-label>{copy.submit}</span><span aria-hidden="true">→</span></button>
+      <p class="form-status" data-contact-status role="status" aria-live="polite" hidden></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { submitContactRequest } from '../lib/contact-request.mjs';
+  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const label = form.querySelector<HTMLElement>('[data-submit-label]');
+    const status = form.querySelector<HTMLElement>('[data-contact-status]');
+    if (!button || !label || !status) return;
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      button.disabled = true;
+      label.textContent = form.dataset.sending ?? '';
+      status.hidden = true;
+      const data = new FormData(form);
+      try {
+        await submitContactRequest({
+          payload: { name: data.get('name'), email: data.get('email'), phone: data.get('phone'), company: data.get('company'), message: data.get('message'), locale: form.dataset.locale, website: data.get('website') },
+        });
+        form.reset();
+        status.textContent = form.dataset.success ?? '';
+        status.className = 'form-status success';
+      } catch (error) {
+        status.textContent = error && typeof error === 'object' && 'code' in error && error.code === 'rate_limited' ? form.dataset.rateLimited ?? '' : form.dataset.error ?? '';
+        status.className = 'form-status error';
+      } finally {
+        status.hidden = false;
+        button.disabled = false;
+        label.textContent = form.dataset.submit ?? '';
+      }
+    });
+  });
+</script>

@@ -1,0 +1,82 @@
+---
+import type { Lang } from '../content';
+import { content } from '../content';
+import { releases } from '../config/releases';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const copy = content[lang].download;
+const stateFor = (state: keyof typeof copy.states) => copy.states[state];
+const actionFor = (state: keyof typeof copy.actions) => copy.actions[state];
+const messageFor = (state: keyof typeof copy.messages) => copy.messages[state];
+---
+
+<section id="download" class="section download-section" data-section="download">
+  <div class="shell download-grid" data-download-picker>
+    <div class="section-heading light"><p class="eyebrow"><span></span>{copy.eyebrow}</p><h2>{copy.title}</h2><p>{copy.body}</p></div>
+    <div class="download-card">
+      <p class="picker-label">{copy.manual}</p>
+      <div class="platform-options" role="list" aria-label={copy.manual}>
+        {releases.map((release, index) => (
+          <button
+            type="button"
+            class:list={['platform-option', index === 0 && 'selected']}
+            data-platform-option={release.id}
+            data-state={release.state}
+            data-version={release.version}
+            data-requirements={release.requirements}
+            data-message={messageFor(release.state)}
+            data-action={actionFor(release.state)}
+            data-action-url={'downloadUrl' in release ? release.downloadUrl : (release.actionUrl ?? '#download')}
+            aria-pressed={index === 0 ? 'true' : 'false'}
+          >
+            <span class:list={['platform-icon', release.id.startsWith('macos') && 'apple', release.id.startsWith('windows') && 'windows']}>{release.id === 'linux' ? 'Lx' : release.id.startsWith('windows') ? '⊞' : '●'}</span>
+            <span><strong>{release.shortLabel}</strong><small>{stateFor(release.state)}</small></span>
+          </button>
+        ))}
+      </div>
+      <div class="selected-release" data-selected-release aria-live="polite">
+        <div class="release-state"><span data-release-state>{stateFor(releases[0].state)}</span><i data-detected-label hidden>{copy.detected}</i></div>
+        <div class="release-details"><p><small>{copy.version}</small><strong data-release-version>{releases[0].version}</strong></p><p><small>{copy.requirements}</small><strong data-release-requirements>{releases[0].requirements}</strong></p></div>
+        <p class="release-message" data-release-message>{messageFor(releases[0].state)}</p>
+        <a class="button button-primary button-full" data-release-action href={'actionUrl' in releases[0] ? releases[0].actionUrl : releases[0].downloadUrl}>{actionFor(releases[0].state)} <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-download-picker]').forEach((picker) => {
+    const options = [...picker.querySelectorAll<HTMLButtonElement>('[data-platform-option]')];
+    const state = picker.querySelector<HTMLElement>('[data-release-state]');
+    const version = picker.querySelector<HTMLElement>('[data-release-version]');
+    const requirements = picker.querySelector<HTMLElement>('[data-release-requirements]');
+    const message = picker.querySelector<HTMLElement>('[data-release-message]');
+    const action = picker.querySelector<HTMLAnchorElement>('[data-release-action]');
+    const detectedLabel = picker.querySelector<HTMLElement>('[data-detected-label]');
+    if (!state || !version || !requirements || !message || !action) return;
+
+    const labels = {
+      en: { available: 'Available', gated: 'Access required', unavailable: 'Temporarily unavailable', unsupported: 'Not supported' },
+      es: { available: 'Disponible', gated: 'Requiere acceso', unavailable: 'No disponible temporalmente', unsupported: 'No compatible' },
+    } as const;
+    const lang = document.documentElement.lang === 'es' ? 'es' : 'en';
+    const select = (option: HTMLButtonElement, detected = false) => {
+      options.forEach((item) => { item.classList.toggle('selected', item === option); item.setAttribute('aria-pressed', String(item === option)); });
+      const releaseState = option.dataset.state as keyof typeof labels.en;
+      state.textContent = labels[lang][releaseState];
+      version.textContent = option.dataset.version ?? '';
+      requirements.textContent = option.dataset.requirements ?? '';
+      message.textContent = option.dataset.message ?? '';
+      action.textContent = `${option.dataset.action ?? ''} →`;
+      action.href = option.dataset.actionUrl ?? '#contact';
+      if (detectedLabel) detectedLabel.hidden = !detected;
+    };
+    options.forEach((option) => option.addEventListener('click', () => select(option)));
+
+    const platform = navigator.platform.toLowerCase();
+    const agent = navigator.userAgent.toLowerCase();
+    const id = platform.includes('mac') ? (agent.includes('arm') ? 'macos-arm64' : 'macos-arm64') : platform.includes('win') ? 'windows-x64' : platform.includes('linux') ? 'linux' : null;
+    const detected = id ? options.find((option) => option.dataset.platformOption === id) : null;
+    if (detected) select(detected, true);
+  });
+</script>
