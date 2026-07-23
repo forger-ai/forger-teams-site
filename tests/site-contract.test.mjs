@@ -197,6 +197,7 @@ test('release metadata models every state and exposes four verified public downl
   assert.equal((config.match(/id:\s*'[^']+', state:\s*'available'/g) ?? []).length, 4);
   assert.doesNotMatch(config, /const accessUrl/);
   for (const html of [en(), es()]) {
+    assert.doesNotMatch(html, /signed build|versión firmada/i);
     assert.match(html, /data-download-picker/);
     assert.match(html, /data-platform-option="macos-arm64"/);
     assert.match(html, /data-platform-option="macos-x64"/);

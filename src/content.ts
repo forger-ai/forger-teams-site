@@ -103,11 +103,11 @@ const en = {
   download: {
     eyebrow: 'Explore the desktop app',
     title: 'Download Forger Teams',
-    body: 'Prefer to explore first? Choose the current signed build for your platform. We recommend starting with the free session so we can shape a useful first workflow with you.',
+    body: 'Prefer to explore first? Choose the current build for your platform. We recommend starting with the free session so we can shape a useful first workflow with you.',
     detected: 'Suggested for this device', manual: 'Choose a platform', version: 'Release', requirements: 'Requirements', releaseNotes: 'Release notes',
     states: { available: 'Available', gated: 'Access required', unavailable: 'Temporarily unavailable', unsupported: 'Not supported' },
     actions: { available: 'Download now', gated: 'Request access', unavailable: 'Talk to us', unsupported: 'See other platforms' },
-    messages: { available: 'This signed build is ready to download.', gated: 'We will confirm access and onboarding with your organization before sharing the build.', unavailable: 'This build is not available right now. Contact us for current options.', unsupported: 'Forger Teams does not currently provide a build for this platform.' },
+    messages: { available: 'This build is ready to download.', gated: 'We will confirm access and onboarding with your organization before sharing the build.', unavailable: 'This build is not available right now. Contact us for current options.', unsupported: 'Forger Teams does not currently provide a build for this platform.' },
   },
   footer: { line: 'Automate internal operations without losing the people who understand them.', privacy: 'Privacy', personal: 'Personal Forger', rights: 'All rights reserved.' },
 };
@@ -215,11 +215,11 @@ const es: typeof en = {
   download: {
     eyebrow: 'Explora la aplicación de escritorio',
     title: 'Descarga Forger Teams',
-    body: '¿Prefieres explorar primero? Elige la versión firmada para tu plataforma. Recomendamos partir con la reunión gratuita para dar forma a un primer flujo útil contigo.',
+    body: '¿Prefieres explorar primero? Elige la versión actual para tu plataforma. Recomendamos partir con la reunión gratuita para dar forma a un primer flujo útil contigo.',
     detected: 'Sugerida para este dispositivo', manual: 'Elige una plataforma', version: 'Versión', requirements: 'Requisitos', releaseNotes: 'Notas de versión',
     states: { available: 'Disponible', gated: 'Requiere acceso', unavailable: 'No disponible temporalmente', unsupported: 'No compatible' },
     actions: { available: 'Descargar ahora', gated: 'Solicitar acceso', unavailable: 'Hablar con nosotros', unsupported: 'Ver otras plataformas' },
-    messages: { available: 'Esta versión firmada está lista para descargar.', gated: 'Confirmaremos el acceso y la incorporación con tu organización antes de compartir la aplicación.', unavailable: 'Esta versión no está disponible ahora. Contáctanos para conocer las opciones actuales.', unsupported: 'Forger Teams actualmente no ofrece una versión para esta plataforma.' },
+    messages: { available: 'Esta versión está lista para descargar.', gated: 'Confirmaremos el acceso y la incorporación con tu organización antes de compartir la aplicación.', unavailable: 'Esta versión no está disponible ahora. Contáctanos para conocer las opciones actuales.', unsupported: 'Forger Teams actualmente no ofrece una versión para esta plataforma.' },
   },
   footer: { line: 'Automatiza la operación interna sin perder a las personas que la entienden.', privacy: 'Privacidad', personal: 'Forger personal', rights: 'Todos los derechos reservados.' },
 };
