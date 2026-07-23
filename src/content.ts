@@ -6,14 +6,14 @@ const en = {
     description: 'A separate enterprise desktop app that gives employees graphical tools and their own agents on a shared company foundation.',
     imageAlt: 'Forger Teams operational workspace',
   },
-  nav: { product: 'Product', how: 'How it works', trust: 'Trust', download: 'Request access', sales: 'Talk to sales', language: 'Español' },
+  nav: { product: 'Product', how: 'How it works', trust: 'Trust', download: 'Download', sales: 'Talk to sales', language: 'Español' },
   hero: {
     eyebrow: 'The enterprise desktop app from Forger',
     title: 'Turn internal operations into tools your team can actually use.',
     body: 'Give every employee a graphical workspace to create, run, and manage their own agents on a shared company foundation.',
     primary: 'Request a Teams demo',
     secondary: 'See how it works',
-    note: 'Separate from personal Forger. Access is currently coordinated with each organization.',
+    note: 'Separate from personal Forger. Download the desktop app or talk to us about an organization-wide rollout.',
     visualLabel: 'A graphical Forger Teams operation, from input to shared result',
     map: {
       workspace: 'Operations canvas · Finance',
@@ -82,7 +82,7 @@ const en = {
   download: {
     eyebrow: 'Get the desktop app',
     title: 'Choose the right Forger Teams build',
-    body: 'We currently coordinate access with each organization. Choose your platform to see the exact availability and next step.',
+    body: 'Download the current Forger Teams desktop release for your platform. Talk to us when you are ready to plan an organization-wide rollout.',
     detected: 'Suggested for this device',
     manual: 'Choose a platform',
     version: 'Release',
@@ -111,7 +111,7 @@ const en = {
     error: 'We could not send your inquiry. Your entries are still here—please wait a moment and try again.',
     rateLimited: 'We received several requests. Your entries are still here—please wait a moment before trying again.',
   },
-  final: { productLabel: 'Ready to use it?', productTitle: 'Get Forger Teams for your organization.', productAction: 'Check access', salesLabel: 'Evaluating it for your company?', salesTitle: 'Talk through the operation you want to improve.', salesAction: 'Talk to sales' },
+  final: { productLabel: 'Ready to use it?', productTitle: 'Get Forger Teams for your organization.', productAction: 'Download Forger Teams', salesLabel: 'Evaluating it for your company?', salesTitle: 'Talk through the operation you want to improve.', salesAction: 'Talk to sales' },
   footer: { line: 'Operational software shaped around the people who use it.', privacy: 'Privacy', personal: 'Personal Forger', rights: 'All rights reserved.' },
 };
 
@@ -121,14 +121,14 @@ const es: typeof en = {
     description: 'Una aplicación de escritorio empresarial separada que entrega herramientas gráficas y agentes propios sobre una base común de la empresa.',
     imageAlt: 'Espacio operacional de Forger Teams',
   },
-  nav: { product: 'Producto', how: 'Cómo funciona', trust: 'Confianza', download: 'Solicitar acceso', sales: 'Hablar con ventas', language: 'English' },
+  nav: { product: 'Producto', how: 'Cómo funciona', trust: 'Confianza', download: 'Descargar', sales: 'Hablar con ventas', language: 'English' },
   hero: {
     eyebrow: 'La aplicación de escritorio de Forger para empresas',
     title: 'Convierte operaciones internas en herramientas que tu equipo realmente puede usar.',
     body: 'Entrega a cada persona un espacio gráfico para crear, ejecutar y administrar sus propios agentes sobre una base común de la empresa.',
     primary: 'Solicitar demo de Teams',
     secondary: 'Ver cómo funciona',
-    note: 'Separado de Forger personal. Actualmente coordinamos el acceso con cada organización.',
+    note: 'Separado de Forger personal. Descarga la aplicación o conversemos sobre un despliegue para toda tu organización.',
     visualLabel: 'Una operación gráfica de Forger Teams, desde la entrada hasta el resultado compartido',
     map: {
       workspace: 'Lienzo operacional · Finanzas',
@@ -197,7 +197,7 @@ const es: typeof en = {
   download: {
     eyebrow: 'Obtén la aplicación de escritorio',
     title: 'Elige la versión correcta de Forger Teams',
-    body: 'Actualmente coordinamos el acceso con cada organización. Elige tu plataforma para ver su disponibilidad y el siguiente paso exacto.',
+    body: 'Descarga la versión actual de Forger Teams para tu plataforma. Conversemos cuando quieras planificar un despliegue para toda tu organización.',
     detected: 'Sugerida para este dispositivo',
     manual: 'Elige una plataforma',
     version: 'Versión',
@@ -226,7 +226,7 @@ const es: typeof en = {
     error: 'No pudimos enviar tu consulta. Tus datos siguen aquí; espera un momento e inténtalo nuevamente.',
     rateLimited: 'Recibimos varias solicitudes. Tus datos siguen aquí; espera un momento antes de intentarlo nuevamente.',
   },
-  final: { productLabel: '¿Listo para usarlo?', productTitle: 'Obtén Forger Teams para tu organización.', productAction: 'Revisar acceso', salesLabel: '¿Lo estás evaluando para tu empresa?', salesTitle: 'Conversemos sobre la operación que quieres mejorar.', salesAction: 'Hablar con ventas' },
+  final: { productLabel: '¿Listo para usarlo?', productTitle: 'Obtén Forger Teams para tu organización.', productAction: 'Descargar Forger Teams', salesLabel: '¿Lo estás evaluando para tu empresa?', salesTitle: 'Conversemos sobre la operación que quieres mejorar.', salesAction: 'Hablar con ventas' },
   footer: { line: 'Software operacional creado alrededor de las personas que lo usan.', privacy: 'Privacidad', personal: 'Forger personal', rights: 'Todos los derechos reservados.' },
 };
 

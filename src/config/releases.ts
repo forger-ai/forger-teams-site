@@ -16,36 +16,45 @@ export type ReleaseMetadata =
   | (BaseRelease & { state: 'unavailable'; actionUrl: string })
   | (BaseRelease & { state: 'unsupported'; actionUrl?: string });
 
-const accessUrl = 'https://teams.forger.cloud/#contact';
+const releaseBaseUrl = 'https://github.com/forger-ai/forger-desktop-teams/releases/download/forger-desktop-teams/v0.5.12';
+const releaseNotesUrl = 'https://github.com/forger-ai/forger-desktop-teams/releases/tag/forger-desktop-teams/v0.5.12';
 
-// Static and deliberately conservative until a public release is verified.
+// Static public metadata updated only after the owning release workflow succeeds.
 export const releases: readonly ReleaseMetadata[] = [
   {
-    id: 'macos-arm64', state: 'gated', actionUrl: accessUrl,
+    id: 'macos-arm64', state: 'available',
+    downloadUrl: `${releaseBaseUrl}/forger-desktop-teams-macos-arm64.dmg`,
+    releaseNotesUrl,
     text: {
-      en: { shortLabel: 'macOS (Apple silicon)', version: 'Coordinated access', requirements: 'macOS 13 or newer · Apple silicon' },
-      es: { shortLabel: 'macOS (Apple silicon)', version: 'Acceso coordinado', requirements: 'macOS 13 o posterior · Apple silicon' },
+      en: { shortLabel: 'macOS (Apple silicon)', version: '0.5.12', requirements: 'macOS 13 or newer · Apple silicon' },
+      es: { shortLabel: 'macOS (Apple silicon)', version: '0.5.12', requirements: 'macOS 13 o posterior · Apple silicon' },
     },
   },
   {
-    id: 'macos-x64', state: 'unavailable', actionUrl: accessUrl,
+    id: 'macos-x64', state: 'available',
+    downloadUrl: `${releaseBaseUrl}/forger-desktop-teams-macos-x64.dmg`,
+    releaseNotesUrl,
     text: {
-      en: { shortLabel: 'macOS (Intel)', version: 'No current build', requirements: 'Intel-based Mac' },
-      es: { shortLabel: 'macOS (Intel)', version: 'Sin versión disponible', requirements: 'Mac con procesador Intel' },
+      en: { shortLabel: 'macOS (Intel)', version: '0.5.12', requirements: 'macOS 13 or newer · Intel-based Mac' },
+      es: { shortLabel: 'macOS (Intel)', version: '0.5.12', requirements: 'macOS 13 o posterior · Mac con procesador Intel' },
     },
   },
   {
-    id: 'windows-x64', state: 'gated', actionUrl: accessUrl,
+    id: 'windows-x64', state: 'available',
+    downloadUrl: `${releaseBaseUrl}/forger-desktop-teams-windows-x64.exe`,
+    releaseNotesUrl,
     text: {
-      en: { shortLabel: 'Windows', version: 'Coordinated access', requirements: 'Windows 10 or newer · 64-bit' },
-      es: { shortLabel: 'Windows', version: 'Acceso coordinado', requirements: 'Windows 10 o posterior · 64 bits' },
+      en: { shortLabel: 'Windows', version: '0.5.12', requirements: 'Windows 10 or newer · 64-bit' },
+      es: { shortLabel: 'Windows', version: '0.5.12', requirements: 'Windows 10 o posterior · 64 bits' },
     },
   },
   {
-    id: 'linux', state: 'unsupported', actionUrl: accessUrl,
+    id: 'linux', state: 'available',
+    downloadUrl: `${releaseBaseUrl}/forger-desktop-teams-linux-x64.deb`,
+    releaseNotesUrl,
     text: {
-      en: { shortLabel: 'Linux', version: 'Not offered', requirements: 'No supported build' },
-      es: { shortLabel: 'Linux', version: 'No ofrecida', requirements: 'Sin versión compatible' },
+      en: { shortLabel: 'Linux', version: '0.5.12', requirements: 'Debian-compatible Linux · 64-bit' },
+      es: { shortLabel: 'Linux', version: '0.5.12', requirements: 'Linux compatible con Debian · 64 bits' },
     },
   },
 ];

@@ -68,13 +68,15 @@ test('given the graphical product story, when it is rendered, then meaningful UI
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
 });
 
-test('given coordinated enterprise access, when calls to action render, then they request access instead of implying a public download', () => {
+test('given a verified public release, when calls to action render, then downloads and enterprise rollout remain distinct', () => {
   assert.match(en(), />Request a Teams demo</);
   assert.match(es(), />Solicitar demo de Teams</);
   assert.match(en(), /href="#how-it-works">See how it works</);
   assert.match(es(), /href="#how-it-works">Ver cómo funciona</);
-  assert.doesNotMatch(en(), />Get Forger Teams</);
-  assert.doesNotMatch(es(), />Obtener Forger Teams</);
+  assert.match(en(), /href="#download">Download</);
+  assert.match(es(), /href="#download">Descargar</);
+  assert.match(en(), />Download Forger Teams\s*</);
+  assert.match(es(), />Descargar Forger Teams\s*</);
   assert.doesNotMatch(en(), /secure shared company foundation/i);
   assert.doesNotMatch(es(), /base segura y compartida/i);
 });
@@ -94,12 +96,14 @@ test('given an illustrative interface, when controls and boundaries render, then
 
 test('given a Spanish evaluator, when release options render, then every visible release detail is localized', () => {
   const html = es();
-  assert.match(html, /Acceso coordinado/);
-  assert.match(html, /Sin versión disponible/);
+  assert.match(html, /data-state="available"/);
+  assert.match(html, /data-version="0\.5\.12"/);
   assert.match(html, /macOS 13 o posterior · Apple silicon/);
-  assert.match(html, /Sin versión compatible/);
+  assert.match(html, /macOS 13 o posterior · Mac con procesador Intel/);
+  assert.match(html, /Windows 10 o posterior · 64 bits/);
+  assert.match(html, /Linux compatible con Debian · 64 bits/);
   assert.match(html, /Incorporación/);
-  assert.doesNotMatch(html, /Coordinated access|No current build|No supported build|\bonboarding\b/i);
+  assert.doesNotMatch(html, /Acceso coordinado|Sin versión disponible|Sin versión compatible|Coordinated access|No current build|No supported build|\bonboarding\b/i);
 });
 
 test('each locale has canonical and complete hreflang metadata', () => {
@@ -155,7 +159,7 @@ test('sales form uses the same-origin proxy and locale contract', () => {
   assert.match(read('src/lib/team-demo-proxy.mjs'), /https:\/\/platform\.forger\.cloud\/api\/team_demo_requests/);
 });
 
-test('release metadata models every download state and explicit remote URLs', () => {
+test('release metadata models every state and exposes four verified public downloads', () => {
   const config = read('src/config/releases.ts');
   for (const state of ['available', 'gated', 'unavailable', 'unsupported']) {
     assert.match(config, new RegExp(`'${state}'`));
@@ -163,13 +167,20 @@ test('release metadata models every download state and explicit remote URLs', ()
   assert.match(config, /type ReleaseState/);
   assert.match(config, /state:\s*'available';\s*downloadUrl:\s*string/);
   assert.doesNotMatch(config, /actionUrl:\s*['"]\//);
-  assert.match(config, /const accessUrl = 'https:\/\//);
+  assert.match(config, /const releaseBaseUrl = 'https:\/\/github\.com\/forger-ai\/forger-desktop-teams\/releases\/download\/forger-desktop-teams\/v0\.5\.12'/);
+  assert.match(config, /const releaseNotesUrl = 'https:\/\/github\.com\/forger-ai\/forger-desktop-teams\/releases\/tag\/forger-desktop-teams\/v0\.5\.12'/);
+  assert.equal((config.match(/id:\s*'[^']+', state:\s*'available'/g) ?? []).length, 4);
+  assert.doesNotMatch(config, /const accessUrl/);
   for (const html of [en(), es()]) {
     assert.match(html, /data-download-picker/);
     assert.match(html, /data-platform-option="macos-arm64"/);
     assert.match(html, /data-platform-option="macos-x64"/);
     assert.match(html, /data-platform-option="windows-x64"/);
     assert.match(html, /data-platform-option="linux"/);
+    assert.match(html, /releases\/download\/forger-desktop-teams\/v0\.5\.12\/forger-desktop-teams-macos-arm64\.dmg/);
+    assert.match(html, /releases\/download\/forger-desktop-teams\/v0\.5\.12\/forger-desktop-teams-macos-x64\.dmg/);
+    assert.match(html, /releases\/download\/forger-desktop-teams\/v0\.5\.12\/forger-desktop-teams-windows-x64\.exe/);
+    assert.match(html, /releases\/download\/forger-desktop-teams\/v0\.5\.12\/forger-desktop-teams-linux-x64\.deb/);
   }
 });
 
