@@ -84,10 +84,8 @@ test('proxy preserves rate limiting and hides upstream failures', async () => {
   assert.deepEqual(await offline.json(), { error: 'upstream_unavailable' });
 });
 
-test('Pages Function delegates without secrets or PII logging', () => {
-  const entry = readFileSync(new URL('../functions/api/team-demo-requests.ts', import.meta.url), 'utf8');
+test('contact proxy contains no secrets or PII logging', () => {
   const proxy = readFileSync(new URL('../src/lib/team-demo-proxy.mjs', import.meta.url), 'utf8');
-  assert.match(entry, /handleTeamDemoRequest\(context\.request\)/);
-  assert.doesNotMatch(`${entry}\n${proxy}`, /console\.(?:log|info|warn|error)/);
-  assert.doesNotMatch(`${entry}\n${proxy}`, /API_KEY|TOKEN|SECRET/);
+  assert.doesNotMatch(proxy, /console\.(?:log|info|warn|error)/);
+  assert.doesNotMatch(proxy, /API_KEY|TOKEN|SECRET/);
 });

@@ -23,17 +23,17 @@ The English route is `/`. The Spanish route is `/es/`. Both routes keep the same
 
 ## Implementation
 
-- Astro builds the site as static HTML.
+- Astro builds the site as static HTML served through Cloudflare Workers Static Assets.
 - Shared content lives in `src/content.ts`; update English and Spanish together.
 - Reusable presentation lives in `src/components/`.
 - Canonicals and structured data live in `src/layouts/BaseLayout.astro`.
-- Form submission uses the same-origin Pages Function. The function validates the public payload, maps the locale to the established source value, and forwards it to the existing Forger endpoint without logging personal data.
+- Form submission uses the same-origin Worker endpoint. It validates the public payload, maps the locale to the established source value, and forwards it to the existing Forger endpoint without logging personal data.
 - JavaScript is limited to download selection and form submission behavior.
 - Use system fonts and local assets. Do not add remote font or tracking dependencies.
 - Keep focus states, semantic labels, live status regions, AA contrast, and reduced-motion behavior intact.
 
 ## Validation
 
-Run `npm test`, `npm run build`, and `git diff --check` before handoff. Tests verify localization parity, search metadata, assets, form and download contracts, provider boundaries, motion, and absence of legacy `/teams` canonicals.
+Run `npm test`, `npm run typecheck`, `npm audit --audit-level=high`, and `git diff --check` before handoff. Tests verify localization parity, search metadata, assets, form and download contracts, provider boundaries, motion, edge routing, and absence of legacy `/teams` canonicals.
 
 Do not deploy, publish, tag, commit, or push without explicit authorization.

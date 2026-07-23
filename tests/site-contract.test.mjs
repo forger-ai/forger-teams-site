@@ -60,9 +60,11 @@ test('crawler, sitemap, icon, and social image assets are published', () => {
   const sitemap = read('dist/sitemap.xml');
   assert.match(sitemap, /https:\/\/teams\.forger\.cloud\//);
   assert.match(sitemap, /https:\/\/teams\.forger\.cloud\/es\//);
-  assert.ok(existsSync(new URL('dist/og.png', root)));
+  assert.ok(existsSync(new URL('dist/og.jpg', root)));
   assert.ok(existsSync(new URL('dist/favicon.svg', root)));
-  assert.match(en(), /property="og:image" content="https:\/\/teams\.forger\.cloud\/og\.png"/);
+  assert.match(en(), /property="og:image" content="https:\/\/teams\.forger\.cloud\/og\.jpg"/);
+  assert.match(en(), /property="og:image:width" content="1200"/);
+  assert.match(en(), /property="og:image:height" content="630"/);
 });
 
 test('sales form uses the same-origin proxy and locale contract', () => {
